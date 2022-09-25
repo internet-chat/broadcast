@@ -21,9 +21,9 @@ jobs:
           java-version: 18
         
       - name: Gradle - Build Task
-        run: .\jvm\gradle.bat :java:client:build
+        run: .\jvm\gradlew.bat :java:client:build
       - name: Gradle - Jar Task
-        run: .\jvm\gradle.bat :java:client:jar
+        run: .\jvm\gradlew.bat :java:client:jar
       - name: jPackage to build .exe
         run: |
           ls
