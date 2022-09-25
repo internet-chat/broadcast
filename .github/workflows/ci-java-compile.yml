@@ -24,7 +24,7 @@ jobs:
         run: ls
           
       - name: CD into Gradle project
-        run: cd jvm
+        run: cd .\jvm
         
       - name: b
         run: ls
