@@ -19,24 +19,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 18
-          
-      - name: a
-        run: ls
-          
-      - name: CD into Gradle project
-        run: cd .\jvm
-        
-      - name: b
-        run: ls
         
       - name: Gradle - Build Task
-        run: gradle build
+        run: .\jvm\gradle.bat :java:client:build
       - name: Gradle - Jar Task
-        run: gradle jar
-      - name: CD - Change directory to .jar path
-        run: cd ./build/libs/
+        run: .\jvm\gradle.bat :java:client:jar
       - name: jPackage to build .exe
         run: |
           ls
-          jpackage --type exe --input . --dest . --main-jar .\client.jar --main-class io.ichat.broadcast.java.client.BroadcastUDPClient
+          jpackage --type exe --input .\jvm\java\client\build\libs\ --dest . --main-jar .\client.jar --main-class io.ichat.broadcast.java.client.BroadcastUDPClient
           echo "Finished building"
