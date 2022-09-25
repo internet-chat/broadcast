@@ -1,0 +1,35 @@
+name: CI-Java-Compile
+
+on:
+  push:
+    branches: [ "stable" ]
+  workflow_dispatch:
+
+jobs:
+  # builds an exe file
+  build-windows:
+      
+    runs-on: windows-latest
+    steps:
+      - id: setup-build-env
+        name: Setup Code
+        uses: actions/checkout@v3
+      - id: setup-jdk
+        name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 18
+          
+      - name: CD into Gradle project
+        run: cd jvm
+      - name: Gradle - Build Task
+        run: gradle build
+      - name: Gradle - Jar Task
+        run: gradle jar
+      - name: CD - Change directory to .jar path
+        run: cd ./build/libs/
+      - name: jPackage to build .exe
+        run: |
+          ls
+          jpackage --type exe --input . --dest . --main-jar .\client.jar --main-class io.ichat.broadcast.java.client.BroadcastUDPClient
+          echo "Finished building"
