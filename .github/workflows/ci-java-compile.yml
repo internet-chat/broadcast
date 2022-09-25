@@ -20,8 +20,15 @@ jobs:
         with:
           java-version: 18
           
+      - name: a
+        run: ls
+          
       - name: CD into Gradle project
         run: cd jvm
+        
+      - name: b
+        run: ls
+        
       - name: Gradle - Build Task
         run: gradle build
       - name: Gradle - Jar Task
