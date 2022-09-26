@@ -1,4 +1,4 @@
-name: CI-Java-Compile
+name: CD-Java-Compile
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   # builds an exe file
   build-windows:
       
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - id: setup-build-env
         name: Setup Code
@@ -20,12 +20,11 @@ jobs:
         with:
           java-version: 18
         
-      - name: Gradle - Build Task
-        run: .\jvm\gradlew.bat :java:client:build
-      - name: Gradle - Jar Task
-        run: .\jvm\gradlew.bat :java:client:jar
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Gradle - Jar Client Task
+        run: ./jvm/gradlew :java:client:build
       - name: jPackage to build .exe
         run: |
-          ls
-          jpackage --type exe --input .\jvm\java\client\build\libs\ --dest . --main-jar .\client.jar --main-class io.ichat.broadcast.java.client.BroadcastUDPClient
+          jpackage --type app-image --input ./jvm/java/client/build/libs/ --dest . --main-jar ./jvm/java/client/build/libs/client.jar --main-class io.ichat.broadcast.java.client.BroadcastUDPClient
           echo "Finished building"
